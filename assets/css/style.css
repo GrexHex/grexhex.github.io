@@ -261,12 +261,12 @@ img {
 .works {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 150px var(--inset) 100px;
+  padding: 110px var(--inset) 60px;
 }
 
 .works__title {
-  margin-bottom: clamp(48px, 9vw, 110px);
-  font-size: clamp(58px, 12vw, 168px);
+  margin-bottom: clamp(24px, 4vw, 48px);
+  font-size: clamp(32px, 4.6vw, 56px);
   font-weight: 400;
   line-height: 0.9;
   letter-spacing: -0.06em;
@@ -274,13 +274,13 @@ img {
 
 .work {
   display: block;
-  padding: clamp(22px, 3.5vw, 44px) 0;
+  padding: 10px 0;
 }
 
 .work__name {
-  font-size: clamp(30px, 5.6vw, 78px);
-  line-height: 1;
-  letter-spacing: -0.045em;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 /* ------------------------------------------------------------------
@@ -290,14 +290,14 @@ img {
 .about {
   max-width: 900px;
   margin: 0 auto;
-  padding: 150px var(--inset) 120px;
+  padding: 110px var(--inset) 60px;
 }
 
 .about__title {
-  max-width: 14ch;
-  font-size: clamp(52px, 9vw, 132px);
+  max-width: 20ch;
+  font-size: clamp(30px, 4vw, 48px);
   font-weight: 400;
-  line-height: 0.95;
+  line-height: 1;
   letter-spacing: -0.055em;
 }
 
@@ -370,54 +370,85 @@ img {
 }
 
 /* ------------------------------------------------------------------
-   Case studies
+   Case studies: compact, two columns, fits one screen
 ------------------------------------------------------------------- */
 
 .project {
-  max-width: 1040px;
+  max-width: 1120px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 150px var(--inset) 110px;
+  padding: 96px var(--inset) 40px;
+  display: flex;
+  align-items: center;
+}
+
+.project article {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-auto-rows: min-content;
+  column-gap: clamp(28px, 5vw, 72px);
+  align-items: start;
 }
 
 .project__title {
-  font-size: clamp(52px, 9vw, 132px);
+  font-size: clamp(30px, 3.6vw, 46px);
   font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.055em;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .project__lede {
+  max-width: 34ch;
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.project__body {
   max-width: 44ch;
-  margin-top: 42px;
-  font-size: clamp(19px, 2.2vw, 26px);
-  line-height: 1.35;
+  margin: 22px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  opacity: 0.7;
+}
+
+.project__body p + p {
+  margin-top: 10px;
+}
+
+.project__visit {
+  margin-top: 22px;
+  font-size: 14px;
+}
+
+.project__visit a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.project__next {
+  margin-top: 28px;
+  font-size: 14px;
+}
+
+.project__next a::before {
+  content: "next → ";
+  opacity: 0.5;
 }
 
 .project__figure {
-  margin-top: clamp(54px, 8vw, 100px);
+  grid-column: 2;
+  grid-row: 1 / span 6;
 }
 
 .project__figure img {
   width: 100%;
   height: auto;
-  filter: grayscale(1);
-}
-
-.project__body {
-  max-width: 60ch;
-  margin: clamp(54px, 8vw, 100px) auto 0;
-  font-size: 17px;
-}
-
-.project__body p + p {
-  margin-top: 20px;
-}
-
-.project__next {
-  margin-top: clamp(80px, 12vw, 150px);
-  padding-top: 22px;
-  font-size: clamp(24px, 4vw, 46px);
-  letter-spacing: -0.03em;
+  max-height: calc(100vh - 150px);
+  object-fit: cover;
+  object-position: top;
+  border-radius: 6px;
 }
 
 /* ------------------------------------------------------------------
@@ -440,9 +471,8 @@ img {
   }
 
   .works,
-  .about,
-  .project {
-    padding-top: 110px;
+  .about {
+    padding-top: 90px;
   }
 
   .contact__links {
@@ -459,13 +489,25 @@ img {
   }
 }
 
-.project__visit {
-  max-width: 60ch;
-  margin: 32px auto 0;
-  font-size: 17px;
+.project article > :not(.project__title):not(.project__figure) {
+  grid-column: 1;
 }
 
-.project__visit a {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+@media (max-width: 860px) {
+  .project {
+    display: block;
+    padding-top: 84px;
+  }
+
+  .project article {
+    display: block;
+  }
+
+  .project__figure {
+    margin-top: 24px;
+  }
+
+  .project__figure img {
+    max-height: none;
+  }
 }
