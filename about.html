@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>about — devesh moodley</title>
+  <meta name="description" content="a short introduction.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>document.documentElement.className = "js";</script>
+</head>
+<body class="is-ready">
+
+  <a class="skip-link" href="#main">skip to content</a>
+
+  <header class="bar">
+    <a class="bar__back" href="works.html"><span aria-hidden="true">←</span>work</a>
+    <button
+      class="menu"
+      type="button"
+      data-nav-open
+      aria-label="open navigation"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="nav"
+    >
+      <span class="roll" aria-hidden="true">
+        <span class="roll__track">
+          <span>menu</span>
+          <span>menu</span>
+        </span>
+      </span>
+    </button>
+  </header>
+
+  <main class="about" id="main">
+    <h1 class="about__title">software, made slowly.</h1>
+
+    <p class="about__intro">
+      i&rsquo;m devesh moodley, an independent software developer and the founder of zyewu studio.
+      i build web apps, mobile apps and brands for small businesses in south africa.
+    </p>
+
+    <div class="about__body">
+      <p>
+        my work ranges from security and automotive platforms to insurance tooling and
+        online shops. i like software that does one job clearly.
+      </p>
+      <p>
+        the studio side covers logos, brand guidelines, social content and websites,
+        so a project can go from idea to something people use.
+      </p>
+    </div>
+
+    <p class="about__signoff">— devesh moodley</p>
+  </main>
+
+  <div
+    class="nav"
+    id="nav"
+    data-nav
+    role="dialog"
+    aria-modal="true"
+    aria-label="navigation"
+    aria-hidden="true"
+    inert
+  >
+    <div class="nav__inner">
+      <div class="nav__top">
+        <a class="roll" href="index.html" aria-label="devesh moodley, home">
+          <span class="roll__track" aria-hidden="true">
+            <span>devesh moodley</span>
+            <span>devesh moodley</span>
+          </span>
+        </a>
+        <button class="menu" type="button" data-nav-close aria-label="close navigation">
+          <span class="roll" aria-hidden="true">
+            <span class="roll__track">
+              <span>close</span>
+              <span>close</span>
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <div class="nav__center">
+        <nav class="nav__list" aria-label="main">
+          <a class="nav__link" href="index.html">home</a>
+          <a class="nav__link" href="works.html">works</a>
+          <a class="nav__link" href="about.html" aria-current="page">about</a>
+          <a class="nav__link" href="contact.html">contact</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>
