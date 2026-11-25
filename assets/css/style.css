@@ -612,59 +612,8 @@ img {
 }
 
 /* ------------------------------------------------------------------
-   Work rows open and close; pages fade in and out
+   Pages fade in and out
 ------------------------------------------------------------------- */
-
-.work__more {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition: grid-template-rows 0.6s var(--ease), opacity 0.4s var(--ease);
-}
-
-.work__more-inner {
-  min-height: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding-top: 0;
-  transition: padding-top 0.6s var(--ease);
-}
-
-.work__lede {
-  max-width: 30ch;
-  font-size: 14px;
-  line-height: 1.4;
-  opacity: 0.65;
-}
-
-.work__more img {
-  width: 168px;
-  height: auto;
-  border-radius: 4px;
-  flex: none;
-  transform: translateY(8px);
-  transition: transform 0.6s var(--ease);
-}
-
-@media (hover: hover) {
-  .work:hover .work__more,
-  .work:focus-visible .work__more {
-    grid-template-rows: 1fr;
-    opacity: 1;
-  }
-
-  .work:hover .work__more-inner,
-  .work:focus-visible .work__more-inner {
-    padding-top: 12px;
-  }
-
-  .work:hover .work__more img,
-  .work:focus-visible .work__more img {
-    transform: translateY(0);
-  }
-}
 
 @keyframes page-in {
   from {
