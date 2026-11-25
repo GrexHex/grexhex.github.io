@@ -511,3 +511,102 @@ img {
     max-height: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Hover motion: small, quick, no decoration
+------------------------------------------------------------------- */
+
+.works__list .work {
+  transition: opacity 0.35s var(--ease);
+}
+
+.work__name {
+  display: inline-block;
+  transition: transform 0.45s var(--ease);
+}
+
+.work__name::after {
+  content: "\2192";
+  display: inline-block;
+  margin-left: 0.4em;
+  opacity: 0;
+  transform: translateX(-0.6em);
+  transition: opacity 0.35s var(--ease), transform 0.45s var(--ease);
+}
+
+@media (hover: hover) {
+  .works__list:hover .work {
+    opacity: 0.28;
+  }
+
+  .works__list .work:hover,
+  .works__list .work:focus-visible {
+    opacity: 1;
+  }
+
+  .work:hover .work__name,
+  .work:focus-visible .work__name {
+    transform: translateX(10px);
+  }
+
+  .work:hover .work__name::after,
+  .work:focus-visible .work__name::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.project__visit a,
+.project__next a,
+.contact__links a,
+.contact__mail button {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  text-decoration: none;
+  transition: background-size 0.4s var(--ease), opacity 0.3s var(--ease);
+}
+
+.project__visit a {
+  background-size: 100% 1px;
+}
+
+.project__visit a:hover,
+.project__visit a:focus-visible,
+.project__next a:hover,
+.project__next a:focus-visible,
+.contact__links a:hover,
+.contact__links a:focus-visible,
+.contact__mail button:hover,
+.contact__mail button:focus-visible {
+  background-size: 100% 1px;
+}
+
+.project__visit a:hover {
+  background-size: 0 1px;
+}
+
+.bar__back span {
+  display: inline-block;
+  transition: transform 0.35s var(--ease);
+}
+
+.bar__back:hover span {
+  transform: translateX(-4px);
+}
+
+.project__figure {
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.project__figure img {
+  transition: transform 0.9s var(--ease);
+}
+
+@media (hover: hover) {
+  .project__figure:hover img {
+    transform: scale(1.025);
+  }
+}

@@ -180,7 +180,8 @@
 
   if (asciiOrb) {
     const ramp = " .:-=+*#%@";
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0, lx: 0, ly: 0, tlx: 0, tly: 0, s: 0, ts: 0 };
+    const ripples = [];
     const grid = { cols: 0, rows: 0, width: 0, height: 0, charW: 6, lineH: 8 };
     const startsTransformed =
       asciiToggle && asciiToggle.getAttribute("aria-pressed") === "true";
@@ -210,8 +211,13 @@
 
       pointer.x += (pointer.tx - pointer.x) * 0.06;
       pointer.y += (pointer.ty - pointer.y) * 0.06;
+      pointer.lx += (pointer.tlx - pointer.lx) * 0.18;
+      pointer.ly += (pointer.tly - pointer.ly) * 0.18;
+      pointer.s += (pointer.ts - pointer.s) * 0.12;
+      while (ripples.length && seconds - ripples[0].t > 2.4) ripples.shift();
 
       const radius = Math.min(width * 0.4, height * 0.47);
+      const reach = radius * 0.5;
       const spin = seconds * 0.11 + pointer.x * 0.35;
 
       const cos = Math.cos(spin);
@@ -237,8 +243,31 @@
           const nx = px / (radius * (1 + 0.12 * morph));
           const r2 = nx * nx + ny * ny;
 
+          const dx = px - pointer.lx;
+          const dy = py - pointer.ly;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const near = pointer.s * Math.exp(-(dist * dist) / (reach * reach));
+
+          let wave = 0;
+          for (let i = 0; i < ripples.length; i += 1) {
+            const rp = ripples[i];
+            const age = seconds - rp.t;
+            const rd = Math.hypot(px - rp.x, py - rp.y);
+            const front = age * radius * 1.1;
+            const edge = Math.exp(-Math.pow((rd - front) / (radius * 0.16), 2));
+            wave += edge * Math.max(0, 1 - age / 2.4);
+          }
+
           if (r2 > 1 || Math.abs(baseNy) < 0.1 * morph) {
-            line += " ";
+            // loose dust that gathers around the cursor and rides the ripple
+            const h = Math.sin(col * 12.9898 + row * 78.233) * 43758.5453;
+            const rnd = h - Math.floor(h);
+            const strength = near * 0.9 + wave * 0.6;
+            if (strength > 0.2 && r2 < 1.5 && rnd < strength) {
+              line += rnd < strength * 0.4 ? ":" : ".";
+            } else {
+              line += " ";
+            }
             continue;
           }
 
@@ -258,6 +287,8 @@
 
           let value = Math.pow(light, 0.8) * 0.94 * band;
           value += 0.08;
+          // cursor lifts the surface and brightens it; ripples pass through
+          value += near * 0.4 + wave * 0.35;
 
           // Brighten the lips of the opening using the same character ramp.
           if (morph > 0) {
@@ -315,7 +346,7 @@
       } else {
         morph = morphTarget;
       }
-      if (now - lastPaint > 100) {
+      if (now - lastPaint > 45) {
         paint(now / 1000);
         lastPaint = now;
       }
@@ -329,9 +360,29 @@
       if (!reduceMotion) raf = window.requestAnimationFrame(frame);
     };
 
+    const toLocal = (event) => {
+      const rect = asciiOrb.getBoundingClientRect();
+      pointer.tlx = event.clientX - (rect.left + rect.width / 2);
+      pointer.tly = event.clientY - (rect.top + rect.height / 2);
+    };
+
     window.addEventListener("pointermove", (event) => {
       pointer.tx = (event.clientX / window.innerWidth - 0.5) * 2;
       pointer.ty = (event.clientY / window.innerHeight - 0.5) * 2;
+      toLocal(event);
+      pointer.ts = 1;
+    });
+
+    document.addEventListener("pointerleave", () => {
+      pointer.ts = 0;
+    });
+
+    window.addEventListener("pointerdown", (event) => {
+      toLocal(event);
+      pointer.lx = pointer.tlx;
+      pointer.ly = pointer.tly;
+      ripples.push({ t: performance.now() / 1000, x: pointer.tlx, y: pointer.tly });
+      if (ripples.length > 4) ripples.shift();
     });
 
     document.addEventListener("visibilitychange", () => {
