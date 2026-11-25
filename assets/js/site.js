@@ -490,6 +490,25 @@
   }
 
   /* ---------------------------------------------------------------
+     Fade out before moving to another page of this site.
+  --------------------------------------------------------------- */
+  document.addEventListener("click", (event) => {
+    if (reduceMotion || event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest("a[href]");
+    if (!link || link.target === "_blank" || link.hasAttribute("download")) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin || url.hash && url.pathname === window.location.pathname) return;
+    event.preventDefault();
+    body.classList.add("is-leaving");
+    window.setTimeout(() => {
+      window.location.href = url.href;
+    }, 280);
+  });
+
+  window.addEventListener("pageshow", () => body.classList.remove("is-leaving"));
+
+  /* ---------------------------------------------------------------
      Make sure the page is usable if the entry never resolves.
   --------------------------------------------------------------- */
   window.addEventListener("pageshow", () => {
